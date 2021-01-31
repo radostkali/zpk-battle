@@ -4,13 +4,13 @@ from flask_login import logout_user, login_required
 from daos import AuthDAO
 from services import LoginService
 
-auth_blueprint = Blueprint('auth', __name__)
+auth_blueprint = Blueprint('auth', __name__, url_prefix='/api')
 
 
 @auth_blueprint.route('/login', methods=['POST'])
 def login():
-    username = request.form.get('username')
-    password = request.form.get('password')
+    username = request.json.get('username')
+    password = request.json.get('password')
 
     if not (username and password):
         return jsonify({'error': 'Для входа в аккаунт укажите никнэйм и пароль'}), 400
@@ -21,14 +21,18 @@ def login():
         password=password,
     )
 
-    if not login_response.is_logged_in:
+    if login_response.error:
         return jsonify({'error': login_response.error}), 400
 
-    return 'OK', 200
+    user_entity = login_response.user_entity
+    return jsonify({
+        'id': user_entity.pk,
+        'username': user_entity.username,
+    }), 200
 
 
 @login_required
-@auth_blueprint.route('/logout')
+@auth_blueprint.route('/logout', methods=['POST'])
 def logout():
     logout_user()
-    return 'OK', 200
+    return jsonify({'status': 'OK'}), 200

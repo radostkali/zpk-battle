@@ -4,6 +4,7 @@ from typing import Optional
 from werkzeug.security import check_password_hash
 
 from daos import AuthDAO
+from entities import UserEntity
 
 
 class LoginService:
@@ -12,7 +13,7 @@ class LoginService:
 
     @dataclasses.dataclass
     class LoginResponse:
-        is_logged_in: bool
+        user_entity: Optional[UserEntity] = None
         error: Optional[str] = None
 
     def __init__(self, auth_dao: AuthDAO):
@@ -20,18 +21,16 @@ class LoginService:
 
     def execute(self, username: str, password: str) -> LoginResponse:
         try:
-            user = self.auth_dao.get_user_by_username(username=username)
+            user_entity = self.auth_dao.get_user_by_username(username=username)
         except self.auth_dao.UserDoesNotExists:
             return self.LoginResponse(
-                is_logged_in=False,
                 error=self.USER_DOES_NOT_EXISTS,
             )
 
-        if not check_password_hash(user.password, password):
+        if not check_password_hash(user_entity.password, password):
             return self.LoginResponse(
-                is_logged_in=False,
                 error=self.INVALID_PASSWORD,
             )
 
-        self.auth_dao.login_user(user_id=user.pk)
-        return self.LoginResponse(is_logged_in=True)
+        self.auth_dao.login_user(user_id=user_entity.pk)
+        return self.LoginResponse(user_entity=user_entity)
