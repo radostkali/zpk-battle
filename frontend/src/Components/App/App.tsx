@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { getInfo } from "../../Services/profile-info.service";
 import { useStore } from "../../Store";
 import { LoginPage } from "../LoginPage/LoginPage";
@@ -8,20 +8,18 @@ import "./App.css";
 
 function App() {
   const store = useStore();
-  const navigate = useNavigate();
 
   useEffect(() => {
     onLoad();
   }, []);
 
   const onLoad = async () => {
-    const serverResponse = await getInfo();
-    if (serverResponse.status === "OK") {
-      const { id, username } = serverResponse.data!;
+    const serviceResponse = await getInfo();
+    if (serviceResponse.status === "OK") {
+      const { id, username } = serviceResponse.data!;
       store.login(id, username);
     } else {
       store.logout();
-      navigate("/login");
     }
   };
 
