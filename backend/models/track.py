@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from app import db
 
 
@@ -6,6 +8,8 @@ class Track(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(300), nullable=False)
+    submitted = db.Column(db.DateTime, default=datetime.utcnow)
+
     rates = db.relationship('Rate', back_populates='track')
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
