@@ -15,6 +15,7 @@ def create_app():
 
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
+    app.config['SQLALCHEMY_ECHO'] = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
@@ -36,7 +37,9 @@ def create_app():
     app.register_blueprint(main_blueprint)
 
     # commands
-    from commands import create_user
+    from commands import create_user, create_category, create_round
     app.cli.add_command(create_user)
+    app.cli.add_command(create_category)
+    app.cli.add_command(create_round)
 
     return app
