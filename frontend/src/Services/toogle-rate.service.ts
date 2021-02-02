@@ -1,31 +1,38 @@
-import { Profile } from "./../Entities/profile";
 import { request, RepositoryResponse } from "./repository";
 
-const URL_API_PROFILE_INFO = "/api/profile";
+const URL_API_TOGGLE_RATE = "/api/toggle-rate";
 
 export interface ServiceResponse {
   status: "OK" | "ERROR";
-  data?: Profile;
   error?: string;
 }
 
-export async function getInfo(): Promise<ServiceResponse> {
-  const method = "GET";
+export async function toggleRate(
+  roundId: number,
+  categoryId: number,
+  trackId: number
+): Promise<ServiceResponse> {
+  const data = {
+    roundId,
+    categoryId,
+    trackId,
+  };
+  const body = JSON.stringify(data);
+  const method = "POST";
 
   const options = {
     method,
+    body,
   };
 
   const response: RepositoryResponse = await request(
-    URL_API_PROFILE_INFO,
+    URL_API_TOGGLE_RATE,
     options
   );
 
   if (response.status === "OK") {
-    const data = response.data;
     return {
       status: "OK",
-      data,
     };
   }
 

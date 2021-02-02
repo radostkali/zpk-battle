@@ -1,31 +1,36 @@
-import { Profile } from "./../Entities/profile";
 import { request, RepositoryResponse } from "./repository";
 
-const URL_API_PROFILE_INFO = "/api/profile";
+const URL_API_SUBMIT_TRACK = "/api/submit-track";
 
 export interface ServiceResponse {
   status: "OK" | "ERROR";
-  data?: Profile;
   error?: string;
 }
 
-export async function getInfo(): Promise<ServiceResponse> {
-  const method = "GET";
+export async function submitTrack(
+  roundId: number,
+  name: string
+): Promise<ServiceResponse> {
+  const data = {
+    roundId,
+    name,
+  };
+  const body = JSON.stringify(data);
+  const method = "POST";
 
   const options = {
     method,
+    body,
   };
 
   const response: RepositoryResponse = await request(
-    URL_API_PROFILE_INFO,
+    URL_API_SUBMIT_TRACK,
     options
   );
 
   if (response.status === "OK") {
-    const data = response.data;
     return {
       status: "OK",
-      data,
     };
   }
 

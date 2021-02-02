@@ -1,6 +1,6 @@
 import { request, RepositoryResponse } from "./repository";
 
-const URL_API_AUTH_LOGIN = "/api/logout";
+const URL_API_AUTH_LOGOUT = "/api/logout";
 
 export interface ServiceResponse {
   status: "OK" | "ERROR";
@@ -15,7 +15,7 @@ export async function logout(): Promise<ServiceResponse> {
   };
 
   const response: RepositoryResponse = await request(
-    URL_API_AUTH_LOGIN,
+    URL_API_AUTH_LOGOUT,
     options
   );
 

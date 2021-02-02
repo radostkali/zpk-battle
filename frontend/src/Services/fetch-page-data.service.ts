@@ -1,15 +1,20 @@
-import { Profile } from "./../Entities/profile";
+import { Category, Round } from "./../Entities/battle-entities";
 import { request, RepositoryResponse } from "./repository";
 
-const URL_API_PROFILE_INFO = "/api/profile";
+const URL_API_FETCH_BATTLE_DATA = "/api/battle-data";
+
+type BattleData = {
+  categories: Category[];
+  rounds: Round[];
+};
 
 export interface ServiceResponse {
   status: "OK" | "ERROR";
-  data?: Profile;
+  data?: BattleData;
   error?: string;
 }
 
-export async function getInfo(): Promise<ServiceResponse> {
+export async function fetchBattleData(): Promise<ServiceResponse> {
   const method = "GET";
 
   const options = {
@@ -17,7 +22,7 @@ export async function getInfo(): Promise<ServiceResponse> {
   };
 
   const response: RepositoryResponse = await request(
-    URL_API_PROFILE_INFO,
+    URL_API_FETCH_BATTLE_DATA,
     options
   );
 
