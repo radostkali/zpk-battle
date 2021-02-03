@@ -43,6 +43,7 @@ export const RoundBlock: React.FC<
   const submitTrackForm = showSubmitTrackForm && (
     <form className="round__submit-track-form" onSubmit={submitHandler}>
       <input
+        className="round__submit-track-form-input"
         type="text"
         required
         placeholder="Название трэка"
@@ -55,18 +56,28 @@ export const RoundBlock: React.FC<
     </form>
   );
 
+  const roundStyle = round?.style ? (
+    <span className="round__title_style">{round?.style}</span>
+  ) : null;
+
+  const options = { day: "numeric", month: "long", year: "numeric" };
+  const date = new Date(round?.lastDay!).toLocaleDateString("en-US", options);
+
   return (
     <div className="round">
-      <div className="round__title">
-        <span className="round__title_number">Раунд #{round?.number}</span>{" "}
-        <span className="round__title_theme">"{round?.theme}"</span>
-        <span className="round__title_style">{round?.style}</span>
+      <div className="round__header">
+        <div className="round__title">
+          <span className="round__title_number">Раунд #{round?.number}</span>{" "}
+          <span className="round__title_theme">{round?.theme}</span>{" "}
+          {roundStyle}
+        </div>
+        <span className="round__last-date">Прием трэков до {date}</span>
       </div>
+      <RoundTable roundId={roundId} />
       <div className="round__submit-track">
         {submitBtn}
         {submitTrackForm}
       </div>
-      <RoundTable roundId={roundId} />
     </div>
   );
 });

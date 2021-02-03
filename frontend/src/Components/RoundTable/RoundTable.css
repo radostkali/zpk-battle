@@ -19,10 +19,16 @@
   font-weight: bold;
 }
 
+.round-table__username {
+  font-size: x-large;
+}
+
 .round-table__track-name {
   font-weight: normal;
   color: #696969;
   font-size: small;
+  word-break: break-all;
+  max-width: 120px;
 }
 
 .round-table__row {
@@ -34,18 +40,18 @@
 }
 
 .round-table__item {
-  min-width: 120px;
+  width: 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 5px;
+  padding: 5px 7px;
 }
 
 .round-table__item-rate {
   height: 20px;
   border-radius: 5px;
   background-color: #f8f8f8;
-  margin: 0 5px;
-  padding: 5px 7px;
   cursor: pointer;
   transition: background ease 0.3s;
   flex-direction: row;
@@ -63,4 +69,12 @@
   justify-content: flex-start;
   align-items: flex-start;
   color: #696969;
+}
+
+.round-table__rate {
+  font-size: x-large;
+  background-color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
 }

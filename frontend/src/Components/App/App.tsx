@@ -16,8 +16,8 @@ function App() {
   const onLoad = async () => {
     const serviceResponse = await getInfo();
     if (serviceResponse.status === "OK") {
-      const { id, username } = serviceResponse.data!;
-      store.login(id, username);
+      const { id, username, color } = serviceResponse.data!;
+      store.login(id, username, color);
     } else {
       store.logout();
     }

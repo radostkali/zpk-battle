@@ -24,8 +24,8 @@ export const LoginPage = () => {
     const serviceResponse: ServiceResponse = await login(username, password);
 
     if (serviceResponse.status === "OK") {
-      const { id, username } = serviceResponse.data!;
-      store.login(id, username);
+      const { id, username, color } = serviceResponse.data!;
+      store.login(id, username, color);
       navigate("/");
     } else {
       setError(serviceResponse.error!);

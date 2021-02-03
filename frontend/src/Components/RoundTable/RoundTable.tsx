@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useState } from "react";
+import React from "react";
 import { fetchBattleData } from "../../Services/fetch-page-data.service";
 import { toggleRate } from "../../Services/toogle-rate.service";
 import { useStore } from "../../Store";
@@ -9,17 +9,7 @@ export const RoundTable: React.FC<
   React.PropsWithoutRef<{ roundId: number }>
 > = observer(({ roundId }) => {
   const store = useStore();
-
   const round = store.getRound(roundId);
-
-  const headers = round!.tracks.map((track) => {
-    return (
-      <div className="round-table__item">
-        <span>{track.userUsername}</span>
-        <span className="round-table__track-name">{track.name}</span>
-      </div>
-    );
-  });
 
   const rateToggleHandler = async (
     roundId: number,
@@ -44,13 +34,31 @@ export const RoundTable: React.FC<
     }
   };
 
+  const headers = round!.tracks.map((track) => {
+    return (
+      <div className="round-table__item">
+        <span
+          className="round-table__username"
+          style={{ color: track.userColor }}
+        >
+          {track.userUsername}
+        </span>
+        <span className="round-table__track-name">{track.name}</span>
+      </div>
+    );
+  });
+
   const rows = store.categories.map((category) => {
     const rates = round!.tracks.map((track) => {
       const rates = track.rates.filter((x) => x.categoryId === category.id);
 
       const marks = rates.map((rate) => {
         return (
-          <span className="round-table__rate" title={rate.userUsername}>
+          <span
+            className="round-table__rate"
+            style={{ color: rate.userColor }}
+            title={rate.userUsername}
+          >
             +
           </span>
         );

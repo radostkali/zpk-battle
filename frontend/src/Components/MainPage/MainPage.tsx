@@ -59,7 +59,9 @@ export const MainPage = observer(() => {
   return (
     <div>
       <header className="header">
-        <span className="header__username">{store.username}</span>
+        <span className="header__username" style={{ color: store.color! }}>
+          {store.username}
+        </span>
         {authBtn}
       </header>
       <div className="body">{rounds}</div>

@@ -3,7 +3,7 @@ export interface Round {
   number: number;
   theme: string;
   type: string;
-  lastDay: number;
+  lastDay: string;
   style?: string;
   tracks: Track[];
 }
@@ -13,6 +13,7 @@ export interface Track {
   name: string;
   userId: number;
   userUsername: string;
+  userColor: string;
   rates: Rate[];
 }
 
@@ -20,6 +21,7 @@ export interface Rate {
   categoryId: number;
   userId: number;
   userUsername: string;
+  userColor: string;
 }
 
 export interface Category {
