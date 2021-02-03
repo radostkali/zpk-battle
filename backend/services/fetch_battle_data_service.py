@@ -15,6 +15,7 @@ class FetchBattleDataService:
             'name': track_entity.name,
             'userId': track_entity.user_id,
             'userUsername': track_entity.user_username,
+            'userColor': f'#{track_entity.user_color}',
             'rates': [],
         }
 
@@ -50,6 +51,7 @@ class FetchBattleDataService:
                         'categoryId': rate.category_id,
                         'userId': rate.user_id,
                         'userUsername': rate.user_username,
+                        'userColor': f'#{rate.user_color}',
                     }
                     rates_dicts.append(rate_dict)
 

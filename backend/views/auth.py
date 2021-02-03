@@ -17,6 +17,7 @@ def profile():
     return jsonify({
         'id': current_user.id,
         'username': current_user.username,
+        'color': f'#{current_user.color}',
     }), 200
 
 

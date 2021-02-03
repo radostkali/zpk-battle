@@ -35,6 +35,7 @@ class TrackEntity:
     name: str
     user_id: int
     user_username: str
+    user_color: str
 
 
 @dataclass
@@ -43,3 +44,4 @@ class RateEntity:
     user_id: int
     track_id: int
     user_username: str
+    user_color: str

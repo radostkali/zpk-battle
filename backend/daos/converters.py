@@ -20,19 +20,21 @@ def round_orm_to_entity(round_category_orm: Round) -> RoundEntity:
     )
 
 
-def track_orm_to_entity(track_orm: Track, user_username: str) -> TrackEntity:
+def track_orm_to_entity(track_orm: Track, user_username: str, user_color: str) -> TrackEntity:
     return TrackEntity(
         id=track_orm.id,
         name=track_orm.name,
         user_id=track_orm.user_id,
         user_username=user_username,
+        user_color=user_color,
     )
 
 
-def rate_orm_to_entity(rate_orm: Rate, user_username: str) -> RateEntity:
+def rate_orm_to_entity(rate_orm: Rate, user_username: str, user_color: str) -> RateEntity:
     return RateEntity(
         category_id=rate_orm.category_id,
         user_id=rate_orm.user_id,
         track_id=rate_orm.track_id,
         user_username=user_username,
+        user_color=user_color,
     )

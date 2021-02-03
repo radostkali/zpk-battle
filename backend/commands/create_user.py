@@ -9,8 +9,9 @@ from models import User
 @click.command('create_user')
 @click.argument('username')
 @click.argument('password')
+@click.argument('color')
 @with_appcontext
-def create_user(username: str, password: str):
+def create_user(username: str, password: str, color: str):
     """ Register new user """
     user = User.query.filter_by(username=username).first()
     if user:
@@ -21,6 +22,7 @@ def create_user(username: str, password: str):
     new_user = User(
         username=username,
         password=hashed_password,
+        color=color,
     )
 
     db.session.add(new_user)

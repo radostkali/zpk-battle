@@ -26,7 +26,7 @@ class BattleDataDAO:
         return list(map(rate_category_orm_to_entity, categories))
 
     def fetch_rounds_with_tracks(self) -> list[RoundTracksDTO]:
-        rounds = Round.query.all()
+        rounds = Round.query.order_by(Round.number.desc())
         round_tracks_dtos = []
         for round in rounds:
             tracks_users_join = db.session.query(
@@ -41,6 +41,7 @@ class BattleDataDAO:
                 tracks_entities.append(track_orm_to_entity(
                     track_orm=track,
                     user_username=user.username,
+                    user_color=user.color,
                 ))
             round_track_dto = RoundTracksDTO(
                 round=round_orm_to_entity(round),
@@ -62,6 +63,7 @@ class BattleDataDAO:
             rates_entities.append(rate_orm_to_entity(
                 rate_orm=rate,
                 user_username=user.username,
+                user_color=user.color,
             ))
         return rates_entities
 
