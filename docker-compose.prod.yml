@@ -1,0 +1,27 @@
+version: '3.6'
+
+services:
+
+  back-web:
+    container_name: zpk_back_web
+    build:
+      context: ./backend
+    command: bash -c "source .venv/bin/activate && gunicorn -b 0.0.0.0:5000 'app:create_app()'"
+    volumes:
+      - ./backend:/usr/src/zpk
+    env_file:
+      - ./backend/.env
+    expose:
+      - 5000
+
+  nginx:
+    container_name: zpk_nginx
+    build: 
+      context: ./nginx
+      dockerfile: prod.Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - back-web
+    environment: 
+      NODE_ENV: production
