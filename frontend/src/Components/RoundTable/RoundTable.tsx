@@ -83,6 +83,13 @@ export const RoundTable: React.FC<
     );
   });
 
+  const totalRates = round!.tracks.map((track) => {
+    const total = track.rates.length;
+    return (
+      <div className="round-table__item round-table__total-rates">{total}</div>
+    );
+  });
+
   return (
     <div className="round-table-block">
       <div className="round-table">
@@ -91,6 +98,10 @@ export const RoundTable: React.FC<
           {headers}
         </div>
         {rows}
+        <div className="round-table__row">
+          <div className="round-table__category"></div>
+          {totalRates}
+        </div>
       </div>
     </div>
   );

@@ -78,3 +78,8 @@
   width: 30px;
   height: 30px;
 }
+
+.round-table__total-rates {
+  font-size: small;
+  color: #696969;
+}
