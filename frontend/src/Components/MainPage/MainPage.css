@@ -1,23 +1,37 @@
 .header {
-    height: 50px;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: flex-end;
-    padding: 0 100px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 100px;
 }
 
 .header__username {
-    margin: 0 20px;
-    font-weight: bold;
-    font-size: 25px;
+  margin: 0 20px;
+  font-weight: bold;
+  font-size: 25px;
 }
 
 .header__btn {
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    background: none;
-    background-color: #eeeeee;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  background: none;
+  background-color: #eeeeee;
+}
+
+.header__logo {
+  background: #eeeeee;
+  color: #747474;
+  padding: 7px 10px;
+  border-radius: 7px;
+  cursor: default;
+  transition: all ease 0.3s;
+}
+
+.header__logo:hover {
+  background: #000000;
+  color: #0f8;
 }

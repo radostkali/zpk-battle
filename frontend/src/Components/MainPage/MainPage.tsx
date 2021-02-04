@@ -59,10 +59,15 @@ export const MainPage = observer(() => {
   return (
     <div>
       <header className="header">
-        <span className="header__username" style={{ color: store.color! }}>
-          {store.username}
-        </span>
-        {authBtn}
+        <div>
+          <span className="header__logo">ZPK онлайн рэп батл</span>
+        </div>
+        <div>
+          <span className="header__username" style={{ color: store.color! }}>
+            {store.username}
+          </span>
+          {authBtn}
+        </div>
       </header>
       <div className="body">{rounds}</div>
     </div>
