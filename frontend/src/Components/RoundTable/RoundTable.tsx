@@ -53,10 +53,11 @@ export const RoundTable: React.FC<
       const rates = track.rates.filter((x) => x.categoryId === category.id);
 
       const marks = rates.map((rate) => {
+        const markColorStyle = { color: rate.userColor };
         return (
           <span
             className="round-table__rate"
-            style={{ color: rate.userColor }}
+            style={markColorStyle}
             title={rate.userUsername}
           >
             +
