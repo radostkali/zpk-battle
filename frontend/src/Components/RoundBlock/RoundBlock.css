@@ -34,6 +34,11 @@
   font-size: small;
 }
 
+.round__no-tracks {
+  color: #696969;
+  font-style: italic;
+}
+
 .round__submit-btn {
   border: none;
   cursor: pointer;

@@ -28,14 +28,12 @@ export const RoundBlock: React.FC<
     "en-US",
     dateLocalizeOptions
   );
-  const today: Date = new Date();
-  const submitTrackExpired = lastDay > today;
 
   const submitBtn =
     store.isAuth &&
     !roundHasMyTrack &&
     !showSubmitTrackForm &&
-    !submitTrackExpired ? (
+    !round!.isExpired ? (
       <button
         className="round__submit-btn"
         onClick={() => {
@@ -76,6 +74,12 @@ export const RoundBlock: React.FC<
     <span className="round__title_style">{round?.style}</span>
   ) : null;
 
+  const roundTable = round?.tracks.length ? (
+    <RoundTable roundId={roundId} />
+  ) : (
+    <span className="round__no-tracks">Ждем первого участника...</span>
+  );
+
   return (
     <div className="round">
       <div className="round__header">
@@ -88,7 +92,7 @@ export const RoundBlock: React.FC<
           Прием трэков до {lastDateLocalized}
         </span>
       </div>
-      <RoundTable roundId={roundId} />
+      {roundTable}
       <div className="round__submit-track">
         {submitBtn}
         {submitTrackForm}

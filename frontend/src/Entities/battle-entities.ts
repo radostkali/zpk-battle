@@ -5,6 +5,7 @@ export interface Round {
   type: string;
   lastDay: string;
   style?: string;
+  isExpired: boolean;
   tracks: Track[];
 }
 
