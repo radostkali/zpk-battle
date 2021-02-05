@@ -18,8 +18,24 @@ export const RoundBlock: React.FC<
   const round = store.getRound(roundId);
   const roundHasMyTrack = round!.tracks.find((x) => x.userId === store.id);
 
+  const dateLocalizeOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+  const lastDay: Date = new Date(round?.lastDay!);
+  const lastDateLocalized = lastDay.toLocaleDateString(
+    "en-US",
+    dateLocalizeOptions
+  );
+  const today: Date = new Date();
+  const submitTrackExpired = lastDay > today;
+
   const submitBtn =
-    store.isAuth && !roundHasMyTrack && !showSubmitTrackForm ? (
+    store.isAuth &&
+    !roundHasMyTrack &&
+    !showSubmitTrackForm &&
+    !submitTrackExpired ? (
       <button
         className="round__submit-btn"
         onClick={() => {
@@ -60,9 +76,6 @@ export const RoundBlock: React.FC<
     <span className="round__title_style">{round?.style}</span>
   ) : null;
 
-  const options = { day: "numeric", month: "long", year: "numeric" };
-  const date = new Date(round?.lastDay!).toLocaleDateString("en-US", options);
-
   return (
     <div className="round">
       <div className="round__header">
@@ -71,7 +84,9 @@ export const RoundBlock: React.FC<
           <span className="round__title_theme">{round?.theme}</span>{" "}
           {roundStyle}
         </div>
-        <span className="round__last-date">Прием трэков до {date}</span>
+        <span className="round__last-date">
+          Прием трэков до {lastDateLocalized}
+        </span>
       </div>
       <RoundTable roundId={roundId} />
       <div className="round__submit-track">
