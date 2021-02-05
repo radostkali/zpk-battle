@@ -17,7 +17,7 @@ services:
   nginx:
     container_name: zpk_nginx
     build: 
-      context: ./nginx
+      context: .
       dockerfile: prod.Dockerfile
     ports:
       - 80:80
