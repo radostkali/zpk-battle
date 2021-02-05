@@ -34,9 +34,9 @@ export const RoundTable: React.FC<
     }
   };
 
-  const headers = round!.tracks.map((track) => {
+  const headers = round!.tracks.map((track, index) => {
     return (
-      <div className="round-table__item">
+      <div className="round-table__item" key={index}>
         <span
           className="round-table__username"
           style={{ color: track.userColor }}
@@ -48,17 +48,18 @@ export const RoundTable: React.FC<
     );
   });
 
-  const rows = store.categories.map((category) => {
-    const rates = round!.tracks.map((track) => {
+  const rows = store.categories.map((category, categoryIndex) => {
+    const rates = round!.tracks.map((track, trackIndex) => {
       const rates = track.rates.filter((x) => x.categoryId === category.id);
 
-      const marks = rates.map((rate) => {
+      const marks = rates.map((rate, rateIndex) => {
         const markColorStyle = { color: rate.userColor };
         return (
           <span
             className="round-table__rate"
             style={markColorStyle}
             title={rate.userUsername}
+            key={rateIndex}
           >
             +
           </span>
@@ -71,23 +72,26 @@ export const RoundTable: React.FC<
           onClick={() => {
             rateToggleHandler(roundId, category.id, track.id);
           }}
+          key={trackIndex}
         >
           {marks}
         </div>
       );
     });
     return (
-      <div className="round-table__row">
+      <div className="round-table__row" key={categoryIndex}>
         <div className="round-table__category">{category.name}</div>
         {rates}
       </div>
     );
   });
 
-  const totalRates = round!.tracks.map((track) => {
+  const totalRates = round!.tracks.map((track, index) => {
     const total = track.rates.length;
     return (
-      <div className="round-table__item round-table__total-rates">{total}</div>
+      <div className="round-table__item round-table__total-rates" key={index}>
+        {total}
+      </div>
     );
   });
 

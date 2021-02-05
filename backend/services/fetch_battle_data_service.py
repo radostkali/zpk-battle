@@ -33,6 +33,7 @@ class RoundWithTracksDTO:
     type: str
     lastDay: date
     style: Optional[str]
+    isExpired: bool
     tracks: list[int]
 
 
@@ -67,8 +68,10 @@ class FetchBattleDataService:
                 type=round_entity.type,
                 lastDay=round_entity.last_day,
                 style=round_entity.style,
+                isExpired=date.today() > round_entity.last_day,
                 tracks=[],
             )
+
             tracks_with_rates_dtos = []
             for track_entity in round_tracks_dto.tracks:
                 track_with_rates_dto = TrackWithRatesDTO(
