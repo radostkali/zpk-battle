@@ -20,3 +20,4 @@ class Round(db.Model):
 
     tracks = db.relationship('Track', back_populates='round')
     rates = db.relationship('Rate', back_populates='round')
+    pairs = db.relationship('Pair', back_populates='round')

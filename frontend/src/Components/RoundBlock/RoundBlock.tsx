@@ -74,11 +74,12 @@ export const RoundBlock: React.FC<
     <span className="round__title_style">{round?.style}</span>
   ) : null;
 
-  const roundTable = round?.tracks.length ? (
-    <RoundTable roundId={roundId} />
-  ) : (
-    <span className="round__no-tracks">Ждем первого участника...</span>
-  );
+  const roundTable =
+    round?.tracks.length || round?.pairs.length ? (
+      <RoundTable roundId={roundId} />
+    ) : (
+      <span className="round__no-tracks">Ждем первого участника...</span>
+    );
 
   return (
     <div className="round">

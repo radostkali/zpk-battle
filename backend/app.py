@@ -38,9 +38,10 @@ def create_app():
     app.register_blueprint(main_blueprint)
 
     # commands
-    from commands import create_user, create_category, create_round
+    from commands import create_user, create_category, create_round, create_pair
     app.cli.add_command(create_user)
     app.cli.add_command(create_category)
     app.cli.add_command(create_round)
+    app.cli.add_command(create_pair)
 
     return app

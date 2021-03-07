@@ -2,10 +2,15 @@ export interface Round {
   id: number;
   number: number;
   theme: string;
-  type: string;
+  type: 'one_vs_one' | 'all_vs_all';
   lastDay: string;
   style?: string;
   isExpired: boolean;
+  tracks: Track[];
+  pairs: Pair[];
+}
+
+export interface Pair {
   tracks: Track[];
 }
 

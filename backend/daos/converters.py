@@ -1,5 +1,5 @@
-from entities import RateCategoryEntity, RoundEntity, TrackEntity, RateEntity
-from models import RateCategory, Round, Track, Rate
+from entities import RateCategoryEntity, RoundEntity, TrackEntity, RateEntity, PairEntity
+from models import RateCategory, Round, Track, Rate, Pair
 
 
 def rate_category_orm_to_entity(rate_category_orm: RateCategory) -> RateCategoryEntity:
@@ -37,4 +37,14 @@ def rate_orm_to_entity(rate_orm: Rate, user_username: str, user_color: str) -> R
         track_id=rate_orm.track_id,
         user_username=user_username,
         user_color=user_color,
+    )
+
+
+def pair_orm_to_entity(pair_orm: Pair) -> PairEntity:
+    return PairEntity(
+        id=pair_orm.id,
+        user_one_id=pair_orm.user_one_id,
+        user_two_id=pair_orm.user_two_id,
+        user_three_id=pair_orm.user_three_id,
+        round_id=pair_orm.round_id,
     )

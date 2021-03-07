@@ -3,6 +3,8 @@ from datetime import date
 from daos import BattleControlDAO
 from exceptions import SubmitTrackException
 
+from models.round import RoundTypes
+
 
 class SubmitTrackService:
 
@@ -24,6 +26,14 @@ class SubmitTrackService:
         round_entity = self.battle_control_dao.get_round_entity(round_id=round_id)
         if round_entity.last_day < date.today():
             raise SubmitTrackException(message='Раунд уже закончился, трэк сдать нельзя')
+
+        if round_entity.type == RoundTypes.one_vs_one.value:
+            is_pair_exists = self.battle_control_dao.check_if_pair_exists(
+                round_id=round_id,
+                user_id=user_id,
+            )
+            if not is_pair_exists:
+                raise SubmitTrackException(message='Тебя нету ни в одной паре на этот батл')
 
         self.battle_control_dao.create_track(
             round_id=round_id,
