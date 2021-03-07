@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
+import { Track } from "../../Entities/battle-entities";
 import { fetchBattleData } from "../../Services/fetch-page-data.service";
 import { toggleRate } from "../../Services/toogle-rate.service";
 import { useStore } from "../../Store";
@@ -34,7 +35,10 @@ export const RoundTable: React.FC<
     }
   };
 
-  const headers = round!.tracks.map((track, index) => {
+  const trackToHeaderReactElement = (
+    track: Track,
+    index: number
+  ): React.ReactElement => {
     return (
       <div className="round-table__item" key={index}>
         <span
@@ -46,38 +50,74 @@ export const RoundTable: React.FC<
         <span className="round-table__track-name">{track.name}</span>
       </div>
     );
-  });
+  };
 
-  const rows = store.categories.map((category, categoryIndex) => {
-    const rates = round!.tracks.map((track, trackIndex) => {
-      const rates = track.rates.filter((x) => x.categoryId === category.id);
+  let headers: React.ReactElement[] = [];
 
-      const marks = rates.map((rate, rateIndex) => {
-        const markColorStyle = { color: rate.userColor };
-        return (
-          <span
-            className="round-table__rate"
-            style={markColorStyle}
-            title={rate.userUsername}
-            key={rateIndex}
-          >
-            +
-          </span>
-        );
+  if (round!.type === "one_vs_one") {
+    round!.pairs.map((pair, pairIndex) => {
+      const pairHeaders = pair.tracks.map((track, trackIndex) => {
+        const uniqueIndex = pairIndex * 100 + trackIndex;
+        return trackToHeaderReactElement(track, uniqueIndex);
       });
+      headers = [...headers, ...pairHeaders];
+    });
+  } else {
+    headers = round!.tracks.map((track, trackIndex) =>
+      trackToHeaderReactElement(track, trackIndex)
+    );
+  }
 
+  const trackToRatesReactElement = (
+    track: Track,
+    trackIndex: number,
+    categoryId: number
+  ) => {
+    const rates = track.rates.filter((x) => x.categoryId === categoryId);
+
+    const marks = rates.map((rate, rateIndex) => {
+      const markColorStyle = { color: rate.userColor };
       return (
-        <div
-          className="round-table__item round-table__item-rate"
-          onClick={() => {
-            rateToggleHandler(roundId, category.id, track.id);
-          }}
-          key={trackIndex}
+        <span
+          className="round-table__rate"
+          style={markColorStyle}
+          title={rate.userUsername}
+          key={rateIndex}
         >
-          {marks}
-        </div>
+          +
+        </span>
       );
     });
+
+    return (
+      <div
+        className="round-table__item round-table__item-rate"
+        onClick={() => {
+          rateToggleHandler(roundId, categoryId, track.id);
+        }}
+        key={trackIndex}
+      >
+        {marks}
+      </div>
+    );
+  };
+
+  const rows = store.categories.map((category, categoryIndex) => {
+    let rates: React.ReactElement[] = [];
+    if (round!.type === "one_vs_one") {
+      round!.pairs.map((pair, pairIndex) => {
+        const pairTracks = pair.tracks.map((track, trackIndex) => {
+          const uniqueIndex = pairIndex * 100 + trackIndex;
+          return trackToRatesReactElement(track, uniqueIndex, category.id);
+        });
+        rates = [...rates, ...pairTracks];
+      });
+    } else {
+      rates = round!.tracks.map((track, trackIndex) =>
+        trackToRatesReactElement(track, trackIndex, category.id)
+      );
+    }
+
     return (
       <div className="round-table__row" key={categoryIndex}>
         <div className="round-table__category">{category.name}</div>
