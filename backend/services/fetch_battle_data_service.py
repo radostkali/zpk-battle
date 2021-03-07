@@ -26,6 +26,11 @@ class TrackWithRatesDTO:
 
 
 @dataclass
+class PairDTO:
+    tracks: list[TrackWithRatesDTO]
+
+
+@dataclass
 class RoundWithTracksDTO:
     id: int
     number: int
@@ -34,7 +39,8 @@ class RoundWithTracksDTO:
     lastDay: date
     style: Optional[str]
     isExpired: bool
-    tracks: list[int]
+    tracks: list[TrackWithRatesDTO]
+    pairs: list[PairDTO]
 
 
 @dataclass
@@ -70,6 +76,7 @@ class FetchBattleDataService:
                 style=round_entity.style,
                 isExpired=date.today() > round_entity.last_day,
                 tracks=[],
+                pairs=[],
             )
 
             tracks_with_rates_dtos = []

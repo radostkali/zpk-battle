@@ -45,3 +45,12 @@ class RateEntity:
     track_id: int
     user_username: str
     user_color: str
+
+
+@dataclass
+class PairEntity:
+    id: int
+    user_one_id: int
+    user_two_id: int
+    user_three_id: int
+    round_id: int
