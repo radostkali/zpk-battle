@@ -126,14 +126,29 @@ export const RoundTable: React.FC<
     );
   });
 
-  const totalRates = round!.tracks.map((track, index) => {
-    const total = track.rates.length;
-    return (
-      <div className="round-table__item round-table__total-rates" key={index}>
-        {total}
-      </div>
-    );
-  });
+  let totalRates: React.ReactElement[] = [];
+  if (round?.type === "one_vs_one") {
+    for (let i = 0; i < round.pairs.length; i++) {
+      const tracks = round.pairs[i].tracks;
+      for (let j = 0; j < tracks.length; j++) {
+        const total = tracks[j].rates.length;
+        totalRates.push(
+          <div className="round-table__item round-table__total-rates">
+            {total}
+          </div>
+        );
+      }
+    }
+  } else {
+    totalRates = round!.tracks.map((track, index) => {
+      const total = track.rates.length;
+      return (
+        <div className="round-table__item round-table__total-rates" key={index}>
+          {total}
+        </div>
+      );
+    });
+  }
 
   return (
     <div className="round-table-block">
